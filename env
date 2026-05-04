@@ -14,6 +14,6 @@
 
 # one found in a remote Prisma Postgres URL, does not contain any sensitive information.
 
-DATABASE_URL=
+DATABASE_URL="postgresql://neondb_owner:npg_2NeldiuIn6Vp@ep-restless-salad-amoheia5-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 JWT_SECRET=skillBackend_secret
 PORT=5000
