@@ -1,4 +1,4 @@
-# LearnBridge Backend
+# SkillBridge Backend
 
 SkillBridge is a role-based skill learning platform backend built with
 TypeScript, Express, PostgreSQL, and Prisma.
