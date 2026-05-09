@@ -18,6 +18,7 @@ import categoryRoutes from './module/category/category.route';
 import CourseRoutes from './module/course/trainer.route';
 import tutorRoutes from './module/tutor/tutor.route';
 import studentDashboardRoutes from './module/studentDashboard/student.dashboard.route';
+import paymentRoutes from './module/payment/payment.route';
  
 
 const app: Application = express();
@@ -46,6 +47,7 @@ app.use("/api/v1", bookingRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/tutors", tutorRoutes);
+app.use("/api/v1", paymentRoutes);
 
 // Root Route
 app.get('/', (req: Request, res: Response) => {

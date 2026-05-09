@@ -10,6 +10,7 @@ model User {
   trainerProfile TrainerProfile?
   courses        Course[]        @relation("TrainerCourses")
   enrollments    Enrollment[]
+  payments       Payment[]       @relation("StudentPayments")
 
   bookings Booking[]
   reviews  Review[]

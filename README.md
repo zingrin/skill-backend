@@ -12,6 +12,7 @@ TypeScript, Express, PostgreSQL, and Prisma.
 - Student enrollment system
 - Search, filter & pagination
 - Dashboard stats (Admin / Trainer / Student)
+- Course payment flow with manual/mobile provider confirmation
 
 ## 🧱 Tech Stack
 
@@ -21,6 +22,7 @@ TypeScript, Express, PostgreSQL, and Prisma.
 - PostgreSQL
 - Prisma ORM
 - JWT, bcrypt
+- Next.js 16 frontend app in `frontend/`
 
 ## 🔐 Roles
 
@@ -35,6 +37,17 @@ npm install
 npx prisma migrate dev
 npm run dev
 ```
+
+Frontend
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+Set `NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1` in
+`frontend/.env.local` if your backend runs on a different URL.
 
 API Base URL
 
@@ -85,6 +98,21 @@ http://localhost:5000/api/v1
 | GET    | `/student/courses`            | View approved courses |
 | GET    | `/student/enrollments`        | View enrolled courses |
 | POST   | `/student/courses/:id/enroll` | Enroll course         |
+
+Paid courses require a completed payment before direct enrollment. Free
+courses still enroll immediately.
+
+---
+
+## PAYMENT
+
+| Method | Endpoint                         | Description                              |
+| ------ | -------------------------------- | ---------------------------------------- |
+| POST   | `/payments`                      | Create payment for a course              |
+| PATCH  | `/payments/:paymentId/confirm`   | Confirm payment and auto-enroll student  |
+| GET    | `/payments/my`                   | Student payment history                  |
+| GET    | `/admin/payments`                | Admin payment list                       |
+| PATCH  | `/admin/payments/:paymentId/status` | Admin update payment status           |
 
 ---
 

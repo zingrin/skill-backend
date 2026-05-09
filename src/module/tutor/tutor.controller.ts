@@ -5,14 +5,24 @@ export const getTutors = async (req: Request, res: Response) => {
   try {
     const { search, category, minPrice, maxPrice, page, limit } = req.query;
 
-    const result = await getAllTutors({
-      search: search as string,
-      category: category as string,
-      minPrice: minPrice ? parseFloat(minPrice as string) : undefined,
-      maxPrice: maxPrice ? parseFloat(maxPrice as string) : undefined,
+    const filters: {
+      search?: string;
+      category?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      page?: number;
+      limit?: number;
+    } = {
       page: page ? parseInt(page as string) : 1,
       limit: limit ? parseInt(limit as string) : 10,
-    });
+    };
+
+    if (search) filters.search = search as string;
+    if (category) filters.category = category as string;
+    if (minPrice) filters.minPrice = parseFloat(minPrice as string);
+    if (maxPrice) filters.maxPrice = parseFloat(maxPrice as string);
+
+    const result = await getAllTutors(filters);
 
     res.status(200).json({
       success: true,
@@ -29,7 +39,14 @@ export const getTutors = async (req: Request, res: Response) => {
 export const getTutorByIdController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const tutor = await getTutorById(id);
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Tutor ID is required",
+      });
+    }
+
+    const tutor = await getTutorById(id as string);
 
     res.status(200).json({
       success: true,

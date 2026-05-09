@@ -50,7 +50,7 @@ export const getAllTutors = async (filters: {
 
   // Transform data to include average rating
   const tutorsWithRating = await Promise.all(
-    tutors.map(async (tutor) => {
+    tutors.map(async (tutor: any) => {
       const reviews = await prisma.review.findMany({
         where: {
           course: {

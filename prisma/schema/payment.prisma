@@ -1,0 +1,37 @@
+model Payment {
+  id            String          @id @default(uuid())
+  studentId     String
+  courseId      String
+  amount        Float
+  currency      String          @default("BDT")
+  provider      PaymentProvider @default(MANUAL)
+  status        PaymentStatus   @default(PENDING)
+  transactionId String?
+  checkoutUrl   String?
+  notes         String?
+  paidAt        DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  student User   @relation("StudentPayments", fields: [studentId], references: [id])
+  course  Course @relation(fields: [courseId], references: [id])
+
+  @@index([studentId])
+  @@index([courseId])
+  @@index([status])
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum PaymentProvider {
+  MANUAL
+  BKASH
+  NAGAD
+  ROCKET
+  CARD
+}

@@ -42,6 +42,13 @@ export const enrollCourseController = async (
       });
     }
 
+    if (error.message === "PAYMENT_REQUIRED") {
+      return res.status(402).json({
+        success: false,
+        message: "Payment required before enrolling in this course",
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: "Internal server error",

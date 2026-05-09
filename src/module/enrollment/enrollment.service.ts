@@ -27,6 +27,20 @@ export const enrollCourse = async (studentId: string, courseId: string) => {
     throw new Error("ALREADY_ENROLLED");
   }
 
+  if (course.price > 0) {
+    const completedPayment = await prisma.payment.findFirst({
+      where: {
+        studentId,
+        courseId,
+        status: "COMPLETED",
+      },
+    });
+
+    if (!completedPayment) {
+      throw new Error("PAYMENT_REQUIRED");
+    }
+  }
+
   return prisma.enrollment.create({
     data: {
       studentId,
